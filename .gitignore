@@ -10,3 +10,4 @@ build/
 local.properties
 *.iml
 pubspec.lock
+publish.sh
