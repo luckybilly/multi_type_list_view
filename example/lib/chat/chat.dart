@@ -112,7 +112,7 @@ class ChatState extends State<Chat> {
             widgetBuilders: [
               StringChatDetailBuilder(friendName, friendAvatar), //builder for a string chat message
               EmojiChatDetailBuilder(friendName, friendAvatar), //builder for an emoji message
-              //ImageChatDetailBuilder(friendName, friendAvatar), //builder for an image message
+              ImageChatDetailBuilder(friendName, friendAvatar), //builder for an image message
               TimeMessageBuilder(), //builder to show time
             ],
             widgetBuilderForUnsupportedItemType: UnsupportedChatDetail(friendName, friendAvatar),
