@@ -3,13 +3,11 @@ library multi_type_list_view;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-
 /// build widget for items of type [T]
 /// implements [ buildWidget ] function to create widget
 ///
 /// subclass can change its rule via override [canBuild] function
 abstract class MultiTypeWidgetBuilder<T> {
-
   /// Determines whether this builder can create widgets for this [ item ] and [ index ]
   /// by default, matches the class type
   /// subclass can change the rule by override this function
@@ -29,7 +27,6 @@ abstract class MultiTypeWidgetBuilder<T> {
 /// data is not null, but no [ MultiTypeWidgetBuilder ] specified
 /// this builder can accept all not null item by override [ canBuild ] function
 abstract class UnsupportedItemTypeWidgetBuilder extends MultiTypeWidgetBuilder {
-
   /// By default, [ UnsupportedItemTypeWidgetBuilder ] will match all items
   ///     which not null but none of [MultiTypeListView.widgetBuilders] matches
   ///
@@ -39,11 +36,13 @@ abstract class UnsupportedItemTypeWidgetBuilder extends MultiTypeWidgetBuilder {
     return item != null;
   }
 }
+
 ///
 typedef WidgetWrapper<T> = Widget Function(Widget widget, T item, int index);
 
 class MultiTypeListView extends ListView {
-  static final bool inProduction = const bool.fromEnvironment("dart.vm.product");
+  static final bool inProduction =
+      const bool.fromEnvironment("dart.vm.product");
 
   /// widget builders for item in [ items ]
   /// normally, the item is not null when called [ MultiTypeWidget.buildWidget ],
@@ -88,61 +87,63 @@ class MultiTypeListView extends ListView {
     double cacheExtent,
     int semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-  }): assert(widgetBuilders != null, 'builders should not be null!'),
+  })  : assert(widgetBuilders != null, 'builders should not be null!'),
         assert(items != null, 'items should not be null!'),
         super.builder(
-        key: key,
-        scrollDirection: scrollDirection,
-        reverse: reverse,
-        controller: controller,
-        primary: primary,
-        physics: physics,
-        shrinkWrap: shrinkWrap,
-        padding: padding,
-        itemExtent: itemExtent,
-        itemCount: itemCount ?? items.length,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
-        cacheExtent: cacheExtent,
-        semanticChildCount: semanticChildCount,
-        dragStartBehavior: dragStartBehavior,
-        itemBuilder: (context, index) {
-          Widget itemWidget;
-          dynamic item = items[index];
-          MultiTypeWidgetBuilder builder = widgetBuilders.firstWhere((it)=> it.canBuild(item, index), orElse: () {
-            // none builder matches this item
-            // try to match with widgetBuilderForUnsupportedItemType (if it not null)
-            if(widgetBuilderForUnsupportedItemType != null && widgetBuilderForUnsupportedItemType.canBuild(item, index)) {
-              return widgetBuilderForUnsupportedItemType;
+          key: key,
+          scrollDirection: scrollDirection,
+          reverse: reverse,
+          controller: controller,
+          primary: primary,
+          physics: physics,
+          shrinkWrap: shrinkWrap,
+          padding: padding,
+          itemExtent: itemExtent,
+          itemCount: itemCount ?? items.length,
+          addAutomaticKeepAlives: addAutomaticKeepAlives,
+          addRepaintBoundaries: addRepaintBoundaries,
+          addSemanticIndexes: addSemanticIndexes,
+          cacheExtent: cacheExtent,
+          semanticChildCount: semanticChildCount,
+          dragStartBehavior: dragStartBehavior,
+          itemBuilder: (context, index) {
+            Widget itemWidget;
+            dynamic item = items[index];
+            MultiTypeWidgetBuilder builder = widgetBuilders
+                .firstWhere((it) => it.canBuild(item, index), orElse: () {
+              // none builder matches this item
+              // try to match with widgetBuilderForUnsupportedItemType (if it not null)
+              if (widgetBuilderForUnsupportedItemType != null &&
+                  widgetBuilderForUnsupportedItemType.canBuild(item, index)) {
+                return widgetBuilderForUnsupportedItemType;
+              }
+              return null;
+            });
+            itemWidget = builder?.buildWidget(context, item, index);
+
+            if (itemWidget == null) {
+              // The reasons why logical execution got here:
+              //  1. no builder matches:
+              //    1.1 none builder inside widgetBuilders matches this item
+              //    1.2 widgetBuilderForUnsupportedItemType is null or widgetBuilderForUnsupportedItemType not match this item
+              //  2. builder.buildWidget returns null
+              if (showDebugPlaceHolder && !inProduction) {
+                // debug mode only
+                itemWidget = buildDebugPlaceHolder(index, item, builder);
+              }
             }
-            return null;
-          });
-          itemWidget = builder?.buildWidget(context, item, index);
 
-          if (itemWidget == null) {
-            // The reasons why logical execution got here:
-            //  1. no builder matches:
-            //    1.1 none builder inside widgetBuilders matches this item
-            //    1.2 widgetBuilderForUnsupportedItemType is null or widgetBuilderForUnsupportedItemType not match this item
-            //  2. builder.buildWidget returns null
-            if(showDebugPlaceHolder && !inProduction) {
-              // debug mode only
-              itemWidget = buildDebugPlaceHolder(index, item, builder);
+            if (itemWidget != null && widgetWrapper != null) {
+              itemWidget = widgetWrapper(itemWidget, item, index) ?? itemWidget;
             }
-          }
 
-          if (itemWidget != null && widgetWrapper != null) {
-            itemWidget = widgetWrapper(itemWidget, item, index) ?? itemWidget;
-          }
-
-          return itemWidget ?? Offstage();
-
-        },
-      );
+            return itemWidget ?? Offstage();
+          },
+        );
 
   /// (debug only) Build a debug place-holder widget
-  static Container buildDebugPlaceHolder(int index, item, MultiTypeWidgetBuilder builder) {
+  static Container buildDebugPlaceHolder(
+      int index, item, MultiTypeWidgetBuilder builder) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.green[300],
@@ -156,12 +157,14 @@ class MultiTypeListView extends ListView {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("DebugPlaceHolder of MultiTypeListView:\nindex: $index\nitem: $item\nbuilder:$builder\n"),
-          Text("You see this block because `showDebugPlaceHolder` is `true` and the current environment is in `debug` mode",
-            style: TextStyle(color: Colors.grey[200]),),
+          Text(
+              "DebugPlaceHolder of MultiTypeListView:\nindex: $index\nitem: $item\nbuilder:$builder\n"),
+          Text(
+            "You see this block because `showDebugPlaceHolder` is `true` and the current environment is in `debug` mode",
+            style: TextStyle(color: Colors.grey[200]),
+          ),
         ],
       ),
     );
   }
-
 }
