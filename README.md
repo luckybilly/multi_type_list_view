@@ -69,9 +69,9 @@ For example: create 3 builders to match 3 item types for the [Demo home page](ex
 
 Item type|Builder
 :-------:|:------
-String|TitleItemBuilder
-List<BannerItem>|BannerBuilder
-Message|MessageBuilder
+`String`|`TitleItemBuilder`
+`List<BannerItem>`|`BannerBuilder`
+`Message`|`MessageBuilder`
 
 
 ```dart
