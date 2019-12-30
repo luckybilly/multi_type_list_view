@@ -2,6 +2,9 @@
 
 A light weight flutter customer ListView that displays multiple widget types.
 
+
+[![Pub](https://img.shields.io/pub/v/multi_type_list_view.svg?style=flat-square)](https://pub.dartlang.org/packages/multi_type_list_view)
+
 ## Screenshot
 
 | [home](example/lib/home/home.dart)          | [chat](example/lib/chat/chat.dart)          |
