@@ -2,11 +2,14 @@
 
 A light weight flutter customer ListView that displays multiple widget types.
 
+
+[![Pub](https://img.shields.io/pub/v/multi_type_list_view.svg?style=flat-square)](https://pub.dartlang.org/packages/multi_type_list_view)
+
 ## Screenshot
 
 | [home](example/lib/home/home.dart)          | [chat](example/lib/chat/chat.dart)          |
 |:-------------------------------------------:|:-------------------------------------------:|
-| <img width="200" src="screenshot/home.png"> | <img width="200" src="screenshot/chat.png"> |
+| <img width="300" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/home.png"> | <img width="300" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/chat.png"> |
 
 ## Getting Started
 
@@ -151,7 +154,7 @@ class MessageBuilder extends MultiTypeWidgetBuilder<Message> {
 
 |Code|Screenshot|
 |:-------------------------------------------:|:-------------------------------------------:|
-| <img width="400" src="screenshot/type_all_code.png"> | <img width="200" src="screenshot/type_all.png"> |
-| <img width="400" src="screenshot/type_image_none_code.png"> | <img width="200" src="screenshot/type_image_none.png"> |
-| <img width="400" src="screenshot/type_placeholder_code.png"> | <img width="200" src="screenshot/type_placeholder.png"> |
-| <img width="400" src="screenshot/type_unsupported_builder_code.png"> | <img width="200" src="screenshot/type_unsuppored_builder.png"> |
+| <img width="400" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_all_code.png"> | <img width="200" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_all.png"> |
+| <img width="400" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_image_none_code.png"> | <img width="200" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_image_none.png"> |
+| <img width="400" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_placeholder_code.png"> | <img width="200" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_placeholder.png"> |
+| <img width="400" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_unsupported_builder_code.png"> | <img width="200" src="https://raw.githubusercontent.com/luckybilly/multi_type_list_view/master/screenshot/type_unsuppored_builder.png"> |
